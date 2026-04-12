@@ -12,26 +12,71 @@ Multi-agent systems tend to produce noise. Everyone "agrees," every agent dumps 
 
 The result is a focused executive meeting, not a group chat.
 
+## Key Innovations
+
+**Sequential Roundtable** -- Each persona sees what previous speakers said
+before responding. This creates genuine dialogue, not parallel monologues.
+
+**The [PASS] Rule** -- Personas respond with `[PASS]` when they have nothing
+to add. In multi-agent systems, the biggest problem is response bloat.
+Silence is a feature, not a bug.
+
+**Sparse Reactions** -- After the roundtable, 1-3 natural reactions are
+generated. A persona never reacts to their own turn. Most personas stay
+quiet. This prevents the "everyone nods and says good point" pattern.
+
+**War Room Constraints** -- Responses capped at 2-4 sentences. One point
+per turn. No info-dumping. Keeps debates focused and actionable.
+
+## How It Works
+
+```
+Question --> Persona 1 speaks --> Persona 2 sees P1, speaks --> Persona 3 sees P1+P2, speaks
+    |
+    v
+Reactions generated (1-3 max, no self-reactions)
+    |
+    v
+Decision logged with approver
+```
+
+Each persona receives the full transcript of previous speakers as context.
+This means Persona 3 can disagree with Persona 1, build on Persona 2,
+or say `[PASS]` if both already covered their point. The conversation
+converges naturally instead of repeating itself.
+
 ## Example
 
 ```
-User: "Ask the team: Should we rewrite the auth system or patch it?"
+User: "Should we mass-migrate customers to the new API or run both
+       versions for 6 months?"
 
-Product Manager: "Patch it. We have a launch in 3 weeks and a rewrite
-delays everything. The current auth works -- it's just ugly."
+Product Manager: "Run both. We have 200+ integrations and breaking
+them on a deadline is how you lose customers. Deprecation warnings
+now, hard cutoff in 6 months, migration guide by end of week."
 
-Staff Engineer: "The tech debt compounds. Every patch adds another
-special case to the middleware. I'd budget 2 sprints for a clean
-rewrite after launch, but patch now."
+Staff Engineer: "Running both doubles our maintenance surface. Every
+bug fix ships twice, every deploy tests twice. I'd cut it to 3 months
+max and put a migration script in the SDK so customers can self-serve."
 
-Security Lead: "Patching auth is how breaches happen. If we patch,
-I need a threat model review of every change. That alone is 3 days."
+Security Lead: "The old API has no rate limiting and the auth tokens
+don't expire. Every month we run both is another month that's
+exploitable. 3 months, but only if we backport rate limiting to v1
+immediately."
 
 [Reactions]
-Staff Engineer reacts to Security Lead: "important"
+Product Manager reacts to Security Lead: "didn't know about the
+token expiry gap -- that changes the risk calculus"
 
-[Decision: "Patch now with threat model review per change. Rewrite in Q3."]
+Staff Engineer reacts to Security Lead: "agreed, rate limiting
+backport is a 2-day job, non-negotiable"
+
+[Decision: "3-month dual-run with rate limiting backported to v1
+within 1 week. SDK migration script ships in 2 weeks. Hard cutoff
+August 1." -- approved by Product Manager]
 ```
+
+Three personas. Five total messages. A decision with a deadline. No filler.
 
 ## Install
 
@@ -44,14 +89,14 @@ npm run build
 
 ## MCP Server Setup
 
-Add to your `claude_desktop_config.json`:
+Add to your `claude_desktop_config.json` (typically at `~/Library/Application Support/Claude/claude_desktop_config.json` on macOS or `%APPDATA%\Claude\claude_desktop_config.json` on Windows):
 
 ```json
 {
   "mcpServers": {
     "exec-team": {
       "command": "node",
-      "args": ["/path/to/mcp-exec-team/dist/index.js"],
+      "args": ["/absolute/path/to/mcp-exec-team/dist/index.js"],
       "env": {
         "ANTHROPIC_API_KEY": "sk-ant-..."
       }
@@ -61,6 +106,8 @@ Add to your `claude_desktop_config.json`:
 ```
 
 The server runs over stdio. No HTTP, no ports, no configuration beyond the API key.
+
+After saving, restart Claude Desktop. The exec-team tools will appear in the tools menu.
 
 ## MCP Tools
 
