@@ -1,6 +1,6 @@
 # mcp-exec-team
 
-> Multi-persona debate engine as an MCP server.
+> A virtual executive team you can consult anytime. Multiple AI personas discuss your question in sequence — each sees what others said. Personas that have nothing to add say `[PASS]` instead of generating filler.
 
 [![CI](https://github.com/protectyr-labs/mcp-exec-team/actions/workflows/ci.yml/badge.svg)](https://github.com/protectyr-labs/mcp-exec-team/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -65,6 +65,27 @@ Three personas. Five messages. A decision with a deadline. No filler.
 - **`[PASS]` rule** -- silence is a feature; prevents the #1 problem in multi-agent systems (response bloat)
 - **Sparse reactions** -- 1-3 max, never self-react; real meetings have silence
 - **War Room mode** -- 2-4 sentences per turn, one point only, no info-dumps
+
+## Use Cases
+
+**Solo founders and small teams** — You're running a company alone. You need
+to decide whether to raise prices, hire a contractor, or pivot your product.
+Instead of guessing, you ask your virtual exec team. The PM argues for user
+impact, the engineer flags technical debt, the security lead warns about
+compliance risk. You get 3 perspectives in 30 seconds.
+
+**Strategic decision support** — Before committing to a major decision
+(new market, technology migration, partnership), run it through a roundtable.
+The sequential format means each persona responds to what others said —
+not parallel monologues.
+
+**AI agent governance** — You have multiple AI agents in a pipeline. Before
+they take an irreversible action, route the decision through a debate.
+The [PASS] rule ensures only relevant agents weigh in.
+
+**Team simulation for planning** — Test how different roles would react
+to a proposal before presenting it to real stakeholders. "How would a
+CFO react to this budget?" "What would a security lead flag?"
 
 ## MCP Tools
 
