@@ -26,14 +26,14 @@ Bring a topic. The panel runs a sequential roundtable. Each specialist sees what
 
 ```mermaid
 flowchart LR
-    U["Your topic<br/><sub>\"should we raise prices?\"</sub>"]
-    P1["🟦 Operations<br/><sub>20yr scale-up</sub>"]
-    P2["🟩 Finance<br/><sub>ex-PE CFO</sub>"]
-    P3["🟧 Security<br/><sub>CISSP, breach-tested</sub>"]
-    P4["🟪 Product<br/><sub>shipped 0→1 x5</sub>"]
-    P5["🟥 Legal<br/><sub>contracts, IP</sub>"]
-    O["Observer<br/><sub>captures the real disagreements</sub>"]
-    D["Synthesis<br/><sub>what you actually do</sub>"]
+    U["Your topic"]
+    P1["Operations"]
+    P2["Finance"]
+    P3["Security"]
+    P4["Product"]
+    P5["Legal"]
+    O["Observer"]
+    D["Synthesis"]
     U --> P1
     P1 --> P2
     P2 --> P3
@@ -41,9 +41,9 @@ flowchart LR
     P4 --> P5
     P5 --> O
     O --> D
-    P2 -.->|"disagrees"| P1
-    P3 -.->|"disagrees"| P4
-    P5 -.->|"disagrees"| P2
+    P2 -.->|disagrees| P1
+    P3 -.->|disagrees| P4
+    P5 -.->|disagrees| P2
     style U fill:#1e293b,stroke:#64748b,color:#cbd5e1
     style P1 fill:#0f172a,stroke:#60a5fa,color:#93c5fd
     style P2 fill:#0f172a,stroke:#34d399,color:#6ee7b7
